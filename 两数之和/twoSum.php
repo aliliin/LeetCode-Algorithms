@@ -16,13 +16,10 @@ function twoSum($nums, $target)
     $count = count($nums);
     for ($i = 0; $i < $count; $i++) {
         $diff = $target - $nums[$i];
-
         if (array_key_exists($diff, $found)) {
             return [$found[$diff], $i];
         }
         $found[$nums[$i]] = $i;
     }
 }
-
-echo '<pre/>';
 print_r(twoSum($nums, $target));
