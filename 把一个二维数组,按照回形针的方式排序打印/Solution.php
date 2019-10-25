@@ -16,21 +16,16 @@ class Solution
             }
             $sRow++;
             if ($sRow >= $row) break;
-
             for ($i = $sRow; $i < $row; $i++) {
                 $arr[] = $array[$i][$col - 1];
             }
-
             $col--;
             if ($sCol >= $col) break;
-
             for ($i = $col - 1; $i >= $sCol; $i--) {
                 $arr[] = $array[$row - 1][$i];
             }
             $row--;
-
             if ($row >= $row) break;
-
             for ($i = $row - 1; $i >= $sRow; $i--) {
                 $arr[] = $array[$i][$sCol];
             }
