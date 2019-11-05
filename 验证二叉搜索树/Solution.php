@@ -47,6 +47,12 @@ class Solution
         return $this->helper($root, null, null);
     }
 
+    /**
+     * @param $root
+     * @param $min   下届
+     * @param $max   上届
+     * @return bool
+     */
     function helper($root, $min, $max)
     {
         if ($root == null) return true;
@@ -58,6 +64,21 @@ class Solution
         return true;
     }
 
+    function isValid($root,$min,$max){
+        if ($root == null) return true;
+        // 每次的根节点的值
+        $val = $root->val;
+
+        if (!empty($min) &&  $val <= $min ) return false;
+
+        if (!empty($max) &&   $val >= $max) return false;
+
+        if (!$this->isValid($root->left,$min,$val)) return false;
+
+        if (!$this->isValid($root->right,$max,$val)) return false;
+
+        return true;
+    }
 }
 
 // 1.中序遍历 左 + 右
