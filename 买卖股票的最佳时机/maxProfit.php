@@ -23,13 +23,15 @@
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 
-class Solution {
+class Solution
+{
 
     /**
      * @param Integer[] $prices
      * @return Integer
      */
-    function maxProfit($prices) {
+    function maxProfit($prices)
+    {
         $maxPrice = 0;
         $min = $prices[0];
         for ($i = 0; $i < count($prices); $i++) {
@@ -44,8 +46,36 @@ class Solution {
         }
         return $maxPrice;
     }
+
+    /**
+     * dp 动态规划的写法
+     * @param $prices
+     * @return int|mixed
+     */
+    function maxProfit1($prices)
+    {
+        if (empty($prices)) return 0;
+        // 0，没买，1 买入一股没卖，2。之前买了现在卖了。
+        $profit[0][0] = 0; // 没买没卖之前
+        $profit[0][1] = -$prices[0]; //  买入一股没卖
+        $profit[0][2] = 0; //之前买了现在卖了。
+        $maxPrice = 0; // 最大金额
+        for ($i = 1; $i < count($prices); $i++) {
+            //  没买股票 前一天
+            $profit[$i][0] = $profit[$i - 1][0];
+            // 买入股票，可以不动（之前已经买过了股票）或者是 前一天没买股票，这一天要买股票，所以要减去购买的金额
+            $profit[$i][1] = max($profit[$i - 1][1], $profit[$i - 1][0] - $prices[$i]);
+            // 卖了股票，前一天（已经买入的时候的）加上套现的金额
+            $profit[$i][2] = $profit[$i - 1][1] + $prices[$i];
+            // 每一步，拿出来最大金额
+            $maxPrice = max($maxPrice, $profit[$i][0], $profit[$i][1], $profit[$i][2]);
+        }
+        return $maxPrice;
+    }
 }
 
 $Solution = new Solution();
-$prices = [7,1,5,3,6,4];
-echo $Solution->maxProfit($prices );
+$prices = [7, 1, 5, 3, 6, 4];
+
+echo $Solution->maxProfit($prices);
+echo $Solution->maxProfit1($prices);
