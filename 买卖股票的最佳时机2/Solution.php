@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
  *
@@ -51,8 +52,32 @@ class Solution
         return $res;
     }
 
+    /**
+     * dp 动态规划的写法。
+     * @param $prices
+     * @return int|mixed
+     */
+    function maxProfit1($prices)
+    {
+        $maxPrice = 0;
+        $profit[0][0] = 0; //  没有买入
+        $profit[0][1] = -$prices[0]; // 买入一股
+        for ($i = 1; $i < count($prices); $i++) {
+            $profit[$i][0] = max($profit[$i - 1][0], $profit[$i - 1][1] + $prices[$i]);
+            // 可以不动（之前已经买过了股票）或者是 前一天没买股票，这一天要买股票，所以要减去购买的金额
+            $profit[$i][1] = max($profit[$i - 1][1], $profit[$i - 1][0] - $prices[$i]);
+            $maxPrice = max($maxPrice, $profit[$i][0], $profit[$i][1]);
+        }
+        return $maxPrice;
+    }
 }
 
 $Solution = new Solution();
 $prices = [7, 1, 5, 3, 6, 4];
-echo $Solution->maxProfit($prices);
+$prices = [1, 2, 3, 4, 5];
+$prices = [7, 6, 4, 3, 1];
+$prices = [7, 1, 5, 3, 6, 4];
+
+//echo $Solution->maxProfit($prices);
+echo $Solution->maxProfit1($prices);
+echo $Solution->maxProfit2($prices);
