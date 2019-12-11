@@ -54,7 +54,7 @@ class Solution
         return $this->_climbStairs1($n);
     }
 
-    // 进阶版本
+    // 进阶版本 新建一个数组来存储走过的步数
     function _climbStairs1($n, $arr = [])
     {
         $arr[0] = 1;
@@ -65,18 +65,19 @@ class Solution
         return $arr[$n - 1];
     }
 
-   function climbStairs2($n){
-        if ($n<=2) return $n;
+    function climbStairs2($n)
+    {
+        if ($n <= 2) return $n;
         $one = 2;
         $two = 1;
         $all = 0;
-        for ($i=2;$i<$n;$i++){
+        for ($i = 2; $i < $n; $i++) {
             $all = $one + $two;
             $two = $one;
             $one = $all;
         }
         return $all;
-   }
+    }
 
 
 }
