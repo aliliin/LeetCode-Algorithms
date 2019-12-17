@@ -8,8 +8,18 @@ var_dump($Solution->maxArea($height));
 
 class Solution
 {
-
     function maxArea($height)
+    {
+        $max = 0;
+        for ($i = 0; $j = count($height) - 1; $i < $j) {
+            $minHeight = $height[$i] < $height[$j] ? $height[$i++] : $height[$j--];
+            $max = max($max, ($j - $i + 1) * $minHeight);
+            var_dump($i);
+        }
+        return $max;
+    }
+
+    function maxArea3($height)
     {
         $max = 0;
         $left = 0;
