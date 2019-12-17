@@ -66,8 +66,6 @@ class Solution
             while ($window && $nums[end($window)] < $num) {
                 array_pop($window);
             }
-
-
             $window[] = $key;
             if ($key >= $k - 1) {
                 $res[] = $nums[$window[0]];
@@ -101,14 +99,19 @@ class Solution
         }
         return $res;
     }
+
+
 }
 
+
+
+
 $nums = [1, 3, -1, -3, 5, 3, 6, 7];
-$nums = [1, -1,];
+//$nums = [1, -1,];
 //$nums = [7,2,4];
 //$nums = [1,3,1,2,0,5];
 $k = 3;
-$k = 1;
+//$k = 1;
 $obj = new Solution();
 $res = $obj->maxSlidingWindow($nums, $k);
 print_r($res);
