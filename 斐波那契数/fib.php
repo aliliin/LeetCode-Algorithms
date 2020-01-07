@@ -23,6 +23,7 @@ F(N) = F(N - 1) + F(N - 2), 其中 N > 1.
  */
 $N = 4;
 var_dump(fib($N));
+
 function fib($N)
 {
     if ($N == 0 || $N == 1) {
@@ -38,4 +39,24 @@ function fib($N)
     return $curr;
     // 递归解法
     return fib($N - 1) + fib($N - 2);
+}
+
+function fib1($N)
+{
+    if ($N <= 1) return $N;
+    $a[0] = 0;
+    $a[1] = 1;
+    for ($i = 2; $i <= $N; ++$i) {
+        $a[$i] = $a[$i - 1] + $a[$i - 2];
+    }
+    return $a[$N];
+}
+// 定义一个新的属性 memo
+function fib2($N)
+{
+    if ($N <= 1) return $N;
+    if ($this->memo[$N] == 0) {
+        $this->memo[$N] =  $this->fib($N - 1) + $this->fib($N - 2);
+    }
+    return $this->memo[$N];
 }
