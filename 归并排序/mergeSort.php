@@ -1,57 +1,42 @@
-public static void sort(int[] arr) {
-        int[] tempArr = new int[arr.length];
-        sort(arr， tempArr， 0， arr.length-1);
-    }
+<?php
 
-    /**
-     * 归并排序
-     * @param arr 排序数组
-     * @param tempArr 临时存储数组
-     * @param startIndex 排序起始位置
-     * @param endIndex 排序终止位置
-     */
-    private static void sort(int[] arr，int[] tempArr，int startIndex，int endIndex){
-        if(endIndex <= startIndex){
-            return;
-        }
-        //中部下标
-        int middleIndex = startIndex + (endIndex - startIndex) / 2;
+function mergesort($array)
+{
+    $count = count($array);
+    $mid = floor($count / 2);
+    if ($count < 2) : //递归mergesort直到数组中只有1个元素，交给merge比较大小存入结果集
+        return $array;
+    endif;
+    $right = array_slice($array, 0, $mid); //从0开始往后截取$mid个数值(不包含本身)，返回剩余数组内容
+    $left = array_slice($array, $mid);
+    return merge(mergesort($left), mergesort($right));
+    /*
+        return merge(return merge(...),return merge(...))
+        1,2,3,4
+        1,2 | 3,4
+        1 | 2  |  3 | 4
+    */
+}
 
-        //分解
-        sort(arr，tempArr，startIndex，middleIndex);
-        sort(arr，tempArr，middleIndex + 1，endIndex);
-
-        //归并
-        merge(arr，tempArr，startIndex，middleIndex，endIndex);
-    }
-
-    /**
-     * 归并
-     * @param arr 排序数组
-     * @param tempArr 临时存储数组
-     * @param startIndex 归并起始位置
-     * @param middleIndex 归并中间位置
-     * @param endIndex 归并终止位置
-     */
-    private static void merge(int[] arr， int[] tempArr， int startIndex， int middleIndex， int endIndex) {
-        //复制要合并的数据
-        for (int s = startIndex; s <= endIndex; s++) {
-            tempArr[s] = arr[s];
-        }
-
-        int left = startIndex;//左边首位下标
-        int right = middleIndex + 1;//右边首位下标
-        for (int k = startIndex; k <= endIndex; k++) {
-            if(left > middleIndex){
-                //如果左边的首位下标大于中部下标，证明左边的数据已经排完了。
-                arr[k] = tempArr[right++];
-            } else if (right > endIndex){
-                //如果右边的首位下标大于了数组长度，证明右边的数据已经排完了。
-                arr[k] = tempArr[left++];
-            } else if (tempArr[right] < tempArr[left]){
-                arr[k] = tempArr[right++];//将右边的首位排入，然后右边的下标指针+1。
-            } else {
-                arr[k] = tempArr[left++];//将左边的首位排入，然后左边的下标指针+1。
-            }
+function merge($left, $right)
+{
+    $result = array();
+    while (count($left) > 0 && count($right) > 0) { //count函数动态判断数组长度
+        if ($left[0] <= $right[0]) {
+            $result[] = array_shift($left); //左边小于右边，将左边存入结果集，在左边数组删除当前元素
+        } else {
+            $result[] = array_shift($right);
         }
     }
+    while (count($left) > 0) {
+        $result[] = array_shift($left);
+    }
+    while (count($right) > 0) {
+        $result[] = array_shift($right);
+    }
+    return $result; //返回本轮结果集
+}
+
+$array = array(2, 4, 1, 7, 714, 492);
+$array = mergesort($array);
+var_dump($array);
