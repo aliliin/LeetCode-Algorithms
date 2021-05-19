@@ -22,6 +22,8 @@ $matrix = [[5, 2], [1, 6]];
 $k = 1;
 
 var_dump(kthLargestValue($matrix, $k));
+var_dump(kthLargestValue1($matrix, $k));
+
 
 function kthLargestValue($matrix, $k)
 {
